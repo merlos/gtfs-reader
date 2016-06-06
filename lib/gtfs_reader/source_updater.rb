@@ -30,12 +30,12 @@ module GtfsReader
       file = Tempfile.new 'gtfs'
       file.binmode
       begin
-        file << open(@source.url).read
+        file << open(@source.url).read.force_encoding("UTF-8")
         file.rewind
-      
+
         Zip::File.open(file).each do |entry|
           temp = Tempfile.new "gtfs_file_#{entry.name}"
-          temp << entry.get_input_stream.read
+          temp << entry.get_input_stream.read.force_encoding("UTF-8")
           temp.close
           @temp_files[entry.name] = temp
         end
@@ -109,7 +109,7 @@ module GtfsReader
           filename
         end
       end.compact
-    end 
+    end
 
     def filename_width
       @filename_width ||= @source.feed_definition.files.max do |a, b|
@@ -156,7 +156,7 @@ module GtfsReader
           raise e
         end
       end
-        
+
     end
 
     def process_from_temp_file(file)
