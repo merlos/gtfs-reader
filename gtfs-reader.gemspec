@@ -82,4 +82,3 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<guard-rspec>, ["~> 4.2"])
   end
 end
-
